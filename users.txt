@@ -1,0 +1,7 @@
+Librarian|admin|Admin|admin@lib.com
+Librarian|L001|Ali |ali@lib.com
+Member|M001|John Doe|john@gmail.com|HISTORY_START|HISTORY_END
+Member|M002|Jane Smith|jane@gmail.com|HISTORY_START|HISTORY_END
+Member|M003|Bob Wilson|bob@gmail.com|HISTORY_START|HISTORY_END
+Member|M004|Alice Johnson|alice@gmail.com|HISTORY_START|HISTORY_END
+

@@ -1,0 +1,73 @@
+# depslib dependency file v1.0
+1766821633 source:c:\users\user\documents\programming assignment y2s1\book.cpp
+	"Book.h"
+	<ctime>
+	<iomanip>
+	<iostream>
+	<string>
+
+1766817083 c:\users\user\documents\programming assignment y2s1\book.h
+	"Queue.h"
+	<iostream>
+	<string>
+
+1766809290 c:\users\user\documents\programming assignment y2s1\queue.h
+	"LinkedList.h"
+	<iostream>
+
+1766767242 c:\users\user\documents\programming assignment y2s1\linkedlist.h
+	<iostream>
+
+1766815179 source:c:\users\user\documents\programming assignment y2s1\guest.cpp
+	"Guest.h"
+
+1766767250 c:\users\user\documents\programming assignment y2s1\guest.h
+	"Person.h"
+
+1766767233 c:\users\user\documents\programming assignment y2s1\person.h
+	<string>
+	<iostream>
+
+1766767256 source:c:\users\user\documents\programming assignment y2s1\librarian.cpp
+	"Librarian.h"
+
+1766767254 c:\users\user\documents\programming assignment y2s1\librarian.h
+	"Person.h"
+
+1766821432 source:c:\users\user\documents\programming assignment y2s1\library.cpp
+	"Library.h"
+	<algorithm>
+	<ctime>
+	<fstream>
+	<iostream>
+	<sstream>
+
+1766822403 c:\users\user\documents\programming assignment y2s1\library.h
+	"Book.h"
+	"Guest.h"
+	"Librarian.h"
+	"Member.h"
+	"Person.h"
+	<map>
+	<vector>
+
+1766815179 c:\users\user\documents\programming assignment y2s1\member.h
+	"BorrowRecord.h"
+	"LinkedList.h"
+	"Person.h"
+
+1766815179 c:\users\user\documents\programming assignment y2s1\borrowrecord.h
+	<ctime>
+	<string>
+
+1766815169 source:c:\users\user\documents\programming assignment y2s1\main.cpp
+	"Library.h"
+
+1766767248 source:c:\users\user\documents\programming assignment y2s1\member.cpp
+	"Member.h"
+	<iostream>
+	<iomanip>
+
+1766767235 source:c:\users\user\documents\programming assignment y2s1\person.cpp
+	"Person.h"
+
