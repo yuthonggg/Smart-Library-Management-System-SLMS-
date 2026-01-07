@@ -9,7 +9,6 @@
 const int FINE_PER_DAY = 1; // RM1 per day
 const int BORROW_DURATION_DAYS = 7;
 
-
 string toLower(const string &s) {
   string result = s;
   transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -37,7 +36,6 @@ Library::~Library() {
   }
 }
 
-
 Book *Library::findBookByID(string id) {
   for (auto &b : books) {
     if (equalsIgnoreCase(b.getBookID(), id))
@@ -53,7 +51,6 @@ Person *Library::findUserByID(string id) {
   }
   return nullptr;
 }
-
 
 void Library::saveBooks() {
   ofstream out("books.txt");
@@ -157,7 +154,6 @@ void Library::loadUsers() {
     } else if (role == "Member") {
       Member *m = new Member(name, id, email);
 
-
       if (parts.size() > 5 && parts[4] == "HISTORY_START") {
         for (size_t i = 5; i < parts.size(); i++) {
           if (parts[i] == "HISTORY_END")
@@ -192,8 +188,6 @@ void Library::loadUsers() {
   if (!hasLib)
     users.push_back(new Librarian("Admin", "admin", "admin@lib.com"));
 }
-
-
 
 void Library::run() {
   cout << "Welcome to Smart Library Management System!" << endl;
@@ -482,8 +476,7 @@ void Library::borrowBook() {
            << ".\n";
       cout << "There are " << b->getReservationCount() << " people waiting.\n";
       time_t est = b->getEstimatedAvailabilityDate();
-      cout << "Estimated availability if you join: "
-           << ctime(&est);
+      cout << "Estimated availability if you join: " << ctime(&est);
       cout << "Add to reservation queue? (y/n): ";
       char c;
       cin >> c;
@@ -661,7 +654,6 @@ void Library::viewAllBorrowedBooks() {
       if (borrower) {
         cout << " (" << borrower->getName() << ")";
       }
-
 
       time_t due = b.getDueDate();
       cout << "\n  Due Date: " << ctime(&due);
