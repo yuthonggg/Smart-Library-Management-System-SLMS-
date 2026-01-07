@@ -20,4 +20,4 @@ public:
   LinkedList<BorrowRecord> &getBorrowHistory();
 };
 
-#endif // MEMBER_H
+#endif

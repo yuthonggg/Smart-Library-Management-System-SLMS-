@@ -6,8 +6,6 @@
 
 using namespace std;
 
-// We can composition or inheritance, or just implement separate node logic.
-// Using the Node from LinkedList.h is convenient.
 
 template <typename T> class Queue {
 private:
@@ -47,7 +45,7 @@ public:
   T peek() const {
     if (!isEmpty())
       return front->data;
-    // Should handle empty case, maybe throw or return default
+
     return T();
   }
 
@@ -66,4 +64,4 @@ public:
   }
 };
 
-#endif // QUEUE_H
+#endif

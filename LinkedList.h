@@ -52,13 +52,12 @@ public:
     Node<T>* getHead() const {
         return head;
     }
-    
+
     bool isEmpty() const {
         return head == nullptr;
     }
-    
-    // Simple traversal for display, but concrete print logic usually depends on T
-    // So we might expose head or iterator-like behavior, or expect T to have << operator
+
+
 };
 
-#endif // LINKEDLIST_H
+#endif

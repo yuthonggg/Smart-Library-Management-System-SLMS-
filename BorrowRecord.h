@@ -18,10 +18,10 @@ struct BorrowRecord {
       : bookID(bID), borrowDate(bDate), dueDate(dDate), returnDate(0),
         isReturned(false) {}
 
-  // Default constructor for Node creation if needed
+
   BorrowRecord()
       : bookID(""), borrowDate(0), dueDate(0), returnDate(0),
         isReturned(false) {}
 };
 
-#endif // BORROWRECORD_H
+#endif

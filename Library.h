@@ -58,4 +58,4 @@ public:
   int calculateFine(time_t dueDate, time_t returnDate);
 };
 
-#endif // LIBRARY_H
+#endif

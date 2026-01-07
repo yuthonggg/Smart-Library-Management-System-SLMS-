@@ -6,10 +6,10 @@
 #include <sstream>
 
 // Constants
-const int FINE_PER_DAY = 1; // $1 per day
+const int FINE_PER_DAY = 1; // RM1 per day
 const int BORROW_DURATION_DAYS = 7;
 
-// Case-insensitive string comparison helper
+
 string toLower(const string &s) {
   string result = s;
   transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -37,7 +37,6 @@ Library::~Library() {
   }
 }
 
-// ---------------- Helper ----------------
 
 Book *Library::findBookByID(string id) {
   for (auto &b : books) {
@@ -55,7 +54,6 @@ Person *Library::findUserByID(string id) {
   return nullptr;
 }
 
-// ---------------- File I/O ----------------
 
 void Library::saveBooks() {
   ofstream out("books.txt");
@@ -66,7 +64,6 @@ void Library::saveBooks() {
     out << b.getBookID() << "|" << b.getTitle() << "|" << b.getAuthor() << "|"
         << b.getGenre() << "|" << b.getIsBorrowed() << "|"
         << b.getBorrowedByMemberID() << "|" << b.getDueDate() << "\n";
-    // Not saving reservations for simplicity or add extra logic
   }
   out.close();
 }
@@ -89,11 +86,7 @@ void Library::loadBooks() {
     if (parts.size() >= 7) {
       Book b(parts[1], parts[2], parts[3], parts[0]);
       if (parts[4] == "1") {
-        // b.borrowBook is not exposing raw setters, so we simulate
-        // But we need to set specific due date
-        // We might need a friend or specific setter, reusing borrowBook
-        // borrowBook sets isBorrowed=true, borrowedBy=..., dueDate=...
-        // time_t conversion from string
+
         time_t due = stoll(parts[6]);
         b.borrowBook(parts[5], due);
       }
@@ -113,10 +106,7 @@ void Library::saveUsers() {
         << p->getEmail();
     if (p->getRole() == "Member") {
       Member *m = dynamic_cast<Member *>(p);
-      // Save history?
-      // For simplicity, we just save basic info first.
-      // Implementation of saving linked list history requires serialization
-      // loop
+
       out << "|HISTORY_START";
       Node<BorrowRecord> *curr = m->getBorrowHistory().getHead();
       while (curr) {
@@ -146,15 +136,9 @@ void Library::loadUsers() {
     string segment;
     vector<string> parts;
 
-    // This split is tricky because history also uses delimiters
-    // Better: Read first 4 token manually
-
-    // Simple manual parsing
     size_t pos = 0;
     string role, id, name, email;
 
-    // Split by pipe
-    // ... Re-using vector approach for the fixed first parts
     while (getline(ss, segment, '|')) {
       parts.push_back(segment);
     }
@@ -173,14 +157,12 @@ void Library::loadUsers() {
     } else if (role == "Member") {
       Member *m = new Member(name, id, email);
 
-      // Parse history
-      // parts[4] should be HISTORY_START if exists
+
       if (parts.size() > 5 && parts[4] == "HISTORY_START") {
         for (size_t i = 5; i < parts.size(); i++) {
           if (parts[i] == "HISTORY_END")
             break;
 
-          // Parse comma separated record
           stringstream hss(parts[i]);
           string hseg;
           vector<string> hparts;
@@ -203,7 +185,6 @@ void Library::loadUsers() {
   }
   in.close();
 
-  // Ensure at least one librarian
   bool hasLib = false;
   for (auto *u : users)
     if (u->getRole() == "Librarian")
@@ -212,7 +193,7 @@ void Library::loadUsers() {
     users.push_back(new Librarian("Admin", "admin", "admin@lib.com"));
 }
 
-// ---------------- Menu Logic ----------------
+
 
 void Library::run() {
   cout << "Welcome to Smart Library Management System!" << endl;
@@ -321,7 +302,7 @@ void Library::memberMenu() {
       break;
     case 3:
       returnBook();
-      break; // Implies returning a book I have
+      break;
     case 4:
       viewMyBorrowedBooks();
       break;
@@ -393,7 +374,7 @@ void Library::removeBook() {
       cout << "Cancelled.\n";
       return;
     }
-    // Iterate and erase
+
     bool found = false;
     for (auto it = books.begin(); it != books.end(); ++it) {
       if (equalsIgnoreCase(it->getBookID(), id)) {
@@ -442,7 +423,6 @@ void Library::removeMember() {
     }
     for (auto it = users.begin(); it != users.end(); ++it) {
       if (equalsIgnoreCase((*it)->getID(), id)) {
-        // Should check if they have borrowed books?
         delete *it;
         users.erase(it);
         cout << "User removed.\n";
@@ -466,7 +446,6 @@ void Library::searchBooks() {
 
   bool found = false;
   for (const auto &b : books) {
-    // Case-insensitive substring check
     if (containsIgnoreCase(b.getTitle(), query) ||
         containsIgnoreCase(b.getAuthor(), query) ||
         containsIgnoreCase(b.getGenre(), query)) {
@@ -480,7 +459,7 @@ void Library::searchBooks() {
 
 void Library::borrowBook() {
   if (currentUser->getRole() != "Member")
-    return; // Should catch in menu logic but safety first
+    return;
 
   while (true) {
     string bid;
@@ -504,14 +483,13 @@ void Library::borrowBook() {
       cout << "There are " << b->getReservationCount() << " people waiting.\n";
       time_t est = b->getEstimatedAvailabilityDate();
       cout << "Estimated availability if you join: "
-           << ctime(&est); // ctime adds newline
+           << ctime(&est);
       cout << "Add to reservation queue? (y/n): ";
       char c;
       cin >> c;
       if (c == 'y' || c == 'Y') {
         b->addReservation(currentUser->getID());
-        cout << "Reservation added position.\n"; // Queue position logic could
-                                                 // be added
+        cout << "Reservation added position.\n";
       }
       return;
     }
@@ -525,8 +503,7 @@ void Library::borrowBook() {
         b->addReservation(currentUser->getID());
         return;
       } else {
-        // It is valid for this user, they are at front of queue
-        // We should dequeue them
+
         b->getReservationQueue().dequeue();
       }
     }
@@ -543,9 +520,9 @@ void Library::borrowBook() {
     m->addBorrowRecord(BorrowRecord(bid, now, due));
 
     cout << "Book borrowed successfully! Due: " << ctime(&due);
-    return; // Success - exit function
-  } // end while
-} // end borrowBook
+    return;
+  }
+}
 
 void Library::returnBook() {
   while (true) {
@@ -579,14 +556,10 @@ void Library::returnBook() {
         daysOver = 0; // Just in case
       fine = daysOver * FINE_PER_DAY;
       if (fine > 0)
-        cout << "Book is Overdue! Fine: $" << fine << endl;
+        cout << "Book is Overdue! Fine: RM" << fine << endl;
     }
 
     // Update Member Record
-    // We need to find the member who borrowed it, which arguably might not be
-    // the person returning it But usually we update the record of the person
-    // who borrowed it.
-
     string borrowerID = b->getBorrowedByMemberID();
     Person *borrower = findUserByID(borrowerID);
     if (borrower && borrower->getRole() == "Member") {
@@ -612,9 +585,9 @@ void Library::returnBook() {
       cout << "Note: This book is reserved by "
            << b->getReservationQueue().peek() << ".\n";
     }
-    return; // Success - exit function
-  } // end while
-} // end returnBook
+    return;
+  }
+}
 
 void Library::viewMyBorrowedBooks() {
   if (currentUser->getRole() != "Member")
@@ -671,9 +644,9 @@ void Library::viewBookQueue() {
     }
 
     cout << "Total in queue: " << queue.size() << endl;
-    return; // Success - exit function
-  } // end while
-} // end viewBookQueue
+    return;
+  }
+}
 
 void Library::viewAllBorrowedBooks() {
   cout << "\n--- All Borrowed Books Details ---\n";
@@ -689,7 +662,7 @@ void Library::viewAllBorrowedBooks() {
         cout << " (" << borrower->getName() << ")";
       }
 
-      // ctime expects a pointer to time_t and includes a newline
+
       time_t due = b.getDueDate();
       cout << "\n  Due Date: " << ctime(&due);
       cout << "-----------------------------------\n";

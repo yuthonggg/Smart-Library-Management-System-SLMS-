@@ -14,16 +14,15 @@ private:
   string genre;
   string bookID;
   bool isBorrowed;
-  string borrowedByMemberID; // Who borrowed it?
+  string borrowedByMemberID;
   time_t dueDate;
 
-  // Queue of Member IDs (strings)
+  // Queue of Member IDs
   Queue<string> reservationQueue;
 
 public:
   Book(string title, string author, string genre, string bookID);
 
-  // Getters and Setters
   string getTitle() const;
   string getAuthor() const;
   string getGenre() const;
@@ -37,14 +36,14 @@ public:
 
   // Reservation Management
   void addReservation(string memberID);
-  string processReservation(); // Returns next member ID or empty
+  string processReservation();
   bool hasReservations() const;
-  Queue<string> &getReservationQueue(); // Helper if we need to inspect (mostly
-                                        // we just process)
+  Queue<string> &getReservationQueue();
+
   int getReservationCount() const;
   time_t getEstimatedAvailabilityDate() const;
 
   void displayInfo() const;
 };
 
-#endif // BOOK_H
+#endif

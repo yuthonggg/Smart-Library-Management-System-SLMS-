@@ -9,4 +9,4 @@ public:
     string getRole() const override;
 };
 
-#endif // GUEST_H
+#endif
