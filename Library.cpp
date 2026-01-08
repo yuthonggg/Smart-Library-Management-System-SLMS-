@@ -283,7 +283,7 @@ void Library::memberMenu() {
   while (true) {
     cout << "\n--- Member Menu (" << currentUser->getName() << ") ---\n";
     cout << "1. Search Books\n2. Borrow Book\n3. Return Book\n";
-    cout << "4. View My History\n5. Logout\nChoice: ";
+    cout << "4. View My History\n5. View All Books\n6. Logout\nChoice: ";
     int choice;
     cin >> choice;
 
@@ -301,6 +301,9 @@ void Library::memberMenu() {
       viewMyBorrowedBooks();
       break;
     case 5:
+      displayAllBooks();
+      break;
+    case 6:
       return;
     default:
       cout << "Invalid.\n";
